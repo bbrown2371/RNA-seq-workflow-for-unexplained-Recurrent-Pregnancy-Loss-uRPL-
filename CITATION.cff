@@ -11,9 +11,7 @@ authors:
   - family-names: Munyard
     given-names: Kylie
     orcid: "https://orcid.org/0000-0002-5113-8646"
-  title: "RNA-seq Workflow for Analysing Recurrent Pregnancy Loss
+  title: "RNA-seq Workflow for Analysing published unexplained Recurrent Pregnancy Loss (uRPL)
   Data"
-  version:
-  doi:
-  date-released:
-  url: 
+  version: 1
+  date-released: 30/09/2025
