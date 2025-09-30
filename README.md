@@ -36,7 +36,7 @@ First, the metadata table must be prepared containing *at least* the information
 > Add all available metadata to this samples sheet after the columns shown above. This could include information such as patient age, body mass index (BMI) and number of previous miscarriages or live births. _Information such as this can be access using databases like the [NCBI Sequence Read Archive (SRA) Run Selector](https://www.ncbi.nlm.nih.gov/Traces/study/)_
 
 ## Workflow Outputs
-An example of the outputs generated for a set of three datasets using this pipeline can be found in [Outputs.md](Outputs.md). The results generated depend on the information being entered into this workflow and may differ from those generated using other tools due to the differences in analysis methods used by each tool. 
+An example of the outputs generated for a set of three datasets using this pipeline can be found in [Expected_Outputs.md](Expected_outputs.md). The results generated depend on the information being entered into this workflow and may differ from those generated using other tools due to the differences in analysis methods used by each tool. 
 
 
 ## Acknowledgements
