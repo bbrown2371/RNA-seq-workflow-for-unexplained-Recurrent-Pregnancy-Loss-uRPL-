@@ -87,7 +87,12 @@ This KEGG dot plot shows each enriched KEGG pathway as a dot, where the colour s
 
 If you find a particular pathway of interest, a KEGG pathway map that shows the up- and down regulation of each gene within that pathway can be generated using the same tools.
 
-Such as the KEGG map below which shows the differential expression of each gene within the [cytokine-cytokine receptor interaction](https://www.kegg.jp/entry/hsa04060) pathway for six different datasets (each represented as a small coloured bar within each gene).
+Such as the KEGG map below which shows the differential expression of each gene within the [cytokine-cytokine receptor interaction](https://www.kegg.jp/entry/hsa04060) pathway for an individual dataset (down-regulated genes shown in orange and upregulated genes shown in blue)
 
-<img width="1799" height="1161" alt="hsa04060 pathview multi" src="https://github.com/user-attachments/assets/a91c6cf7-12df-4d7f-b5aa-e6ce67fcc5c2" />
+<img width="1799" height="1161" alt="hsa04060 CTR" src="https://github.com/user-attachments/assets/d9752819-fa3f-47b3-9c5c-0849b54cdce4" />
+
+Alternatively, the genes within a specific pathway can be represented using a mirrored bar plot which separated the genes by direction of change in expression and groups the genes according to signficance of change in expression. 
+
+<img width="1400" height="900" alt="hsa_deg_bar" src="https://github.com/user-attachments/assets/a107c3b0-8576-41cb-b3ef-6298546a112a" />
+
 
