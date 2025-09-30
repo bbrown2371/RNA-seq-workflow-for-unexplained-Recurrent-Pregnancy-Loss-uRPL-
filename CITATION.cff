@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+  message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: Brown
+    given-names: Isabella M
+    orcid: "https://orcid.org/0009-0002-7532-9727"
+  - family-names: Whatmore
+    given-names: Paul
+    orcid: "https://orcid.org/0000-0001-5746-2271"
+  - family-names: Munyard
+    given-names: Kylie
+    orcid: "https://orcid.org/0000-0002-5113-8646"
+  title: "RNA-seq Workflow for Analysing Recurrent Pregnancy Loss
+  Data"
+  version:
+  doi:
+  date-released:
+  url: 
