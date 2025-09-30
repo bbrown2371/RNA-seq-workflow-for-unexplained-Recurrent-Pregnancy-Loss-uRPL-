@@ -4,7 +4,7 @@ The first version is the complete script used to analyse and generate the data p
 
 ## Workflow 
 The bioinformatics workflow presented here enables the analysis of RNA sequencing data obtained from human reproductive tissues in RPL research. This pipeline requires a sample sheet containing the sample infromation and gene expression matrices generated using the Salmon tool in the [nf-core/rnaseq](https://github.com/nf-core/rnaseq) bioinformatics pipeline. For more information on how to use the nf-core/rnaseq pipeline including the required imputs and expected outputs, please refer to their [documentation](https://nf-co.re/rnaseq/latest/). 
-The processes used to download publicly available high throughput RNA-seq datasets and generate the Salmon gene expression matrices (e.g. counts files) can be found in [Data_Download.md](Data_Preparation.md).
+The processes used to download publicly available high throughput RNA-seq datasets and generate the Salmon gene expression matrices (e.g. counts files) can be found in [Data_Download.md](Data_Download.md).
 
 This workflow can be split into different sections to complete the following analyses:
 * Section 1: Intialising environment and loading required packages and files 
