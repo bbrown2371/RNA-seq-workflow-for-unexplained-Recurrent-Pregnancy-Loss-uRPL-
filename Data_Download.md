@@ -1,5 +1,5 @@
 ## Downloading Publicly Available RNA-seq datasets
-The following code can be used to download SRA files from the [NCBI BioProject](https://www.ncbi.nlm.nih.gov/bioproject/) database.\
+The following code can be used to download SRA files from the [NCBI BioProject](https://www.ncbi.nlm.nih.gov/bioproject/) database.
 
 Navigate to the directory where you want the SRA files downloaded
 Ensure you have downloaded the [SRA Toolkit](https://github.com/ncbi/sra-tools/wiki/02.-Installing-SRA-Toolkit)  
@@ -42,8 +42,9 @@ echo -e "sample,fastq_1,fastq_2,strandedness" | cat - files_cols.txt > manifest.
 rm *.txt
 ```
 
-2. Load the nf-core module and run the RNA-seq piepline specifying the requirement alignment tool ([Salmon](https://combine-lab.github.io/salmon/))\
+2. Load the nf-core module and run the RNA-seq piepline specifying the requirement alignment and quantification tools ([STAR](https://github.com/alexdobin/STAR) [Salmon](https://combine-lab.github.io/salmon/))\
 This code can also be run as an active job or submitted as a slurm script
+The exact version of the workflow and all included tools can be found in the [nf-core rnaseq software file]()
 ```
 module load nextflow/24.04.3 singularity/4.1.0-slurm
 nextflow run nf-core/rnaseq --input manifest.csv --outdir rnaseq_results --genome GRCh38 -profile singularity --aligner star_salmon
