@@ -69,7 +69,7 @@ p_list <- list()
 
 for (name in datasets) {
   # Subset metadata and counts matrix to only include samples from the current dataset
-  samples <- samples_table[is.element(samples_table$Dataset, c(name)),]
+  samples <- samples_table %>% filter(Dataset %in% c(name))
   counts_sub <- counts %>% select(matches(name))
   
   # Create a DESeq object using the raw counts and metadata and run DESeq2 pipeline
@@ -100,7 +100,7 @@ PCs <- list()
 for (name in names(ds)) {
   # Retrieves the DESeq2 object from the named list (ds) and isolates the associated metadata
   data <- ds[[name]] 
-  samples <- samples_table[is.element(samples_table$Dataset, c(name)),]
+  samples <- samples_table %>% filter(Dataset %in% c(name))
   
   vst <- assay(vst(data))
   p <- pca(vst, metadata = samples)
@@ -191,7 +191,7 @@ cor.test(pc_df$PC1, p$metadata$age)
 # Extract PC scores  and variance explained by PC1 and PC2 for the dataset
 # ***CHANGE***
 pc_df <- p_list$<dataset_name>$rotated
-meta <- p_list[[datasets]]$metadata
+meta <- p_list[[<dataset_name>]]$metadata
 pc1_var <- round(p_list$<dataset_name>$variance["PC1"], 1)
 pc2_var <- round(p_list$<dataset_name>$variance["PC2"], 1)
 
@@ -292,7 +292,7 @@ designs <- list( RF = ~ condition, RR = ~ condition, SC = ~ condition,
 # Generate a function that will run each dataset through the DESeq2 pipeline
 run_deseq <- function(dataset, design_formula, counts, samples_table) {
   # Subsets metadata and count data for the current dataset
-  dataset_samples <- samples_table[samples_table$Dataset == dataset, ]
+  dataset_samples <- samples_table %>% filter(Dataset %in% c(dataset))
   dataset_counts <- counts %>% select(matches(dataset))
   
   # Creates DESeq2 object and runs the DESeq2 pipeline
