@@ -277,7 +277,7 @@ eigencorplot(p_list$<dataset_name>, # Replace with actual dataset name e.g. p_li
 # ***CHANGE***
 pc_df <- p_list$<dataset_name>$rotated
 # Example usage: Check the correlation between PC1 and age
-cor.test(pc_df$PC1, p$metadata$age)
+cor.test(pc_df$PC1, p_list$<dataset_name>$metadata$age)
 
 ## Option 3: Colouring a PCA plot according to a specified variable
 # This can be used when you want to investigate the relationship between a factor variable 
