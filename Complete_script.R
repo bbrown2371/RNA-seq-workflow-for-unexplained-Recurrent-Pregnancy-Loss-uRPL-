@@ -616,7 +616,7 @@ lfc_cutoff <- 2
 # specifying up or down regulation based on the log2FoldChange
 plot_data <- all_res %>% filter(!is.na(padj)) %>%
   # Labels each gene as either above or below the log2FoldChange cut-off
-  mutate(lfc = ifelse(abs(log2FoldChange) > lfc_cutoff, "|log2FC| > 2", "|log2FC| < 2"),
+  mutate(lfc = ifelse(abs(log2FoldChange) >= lfc_cutoff, "|log2FC| >= 2", "|log2FC| <= 2"),
          # Classifies genes as up (positive log2FoldChange) or down (negative log2FoldChange) regulated
          Regulation = ifelse(log2FoldChange > 0, "Up", "Down"),
          # Bins adjusted p-values (padj) into significance levels and labels each level
