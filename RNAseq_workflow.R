@@ -485,23 +485,27 @@ for (name in names(kegg_table)) {
 all_res <- bind_rows(dea_pathway, .id = "dataset")
 
 # Define the DEG significance cut-off (i.e. the adjusted p-value)
-alpha <- 0.05
+# ***CHANGE (AS NEEDED)***
+lfc_cutoff <- 2
 
 # Generate a data frame using the combined results that adds a column
 # specifying up or down regulation based on the log2FoldChange
-plot_data <- all_res %>% filter(!is.na(padj), padj <= alpha) %>%
-  mutate(Regulation = ifelse(log2FoldChange > 0, "Up", "Down"),
+plot_data <- all_res %>% filter(!is.na(padj)) %>%
+  # Labels each gene as either above or below the log2FoldChange cut-off
+  mutate(lfc = ifelse(abs(log2FoldChange) >= lfc_cutoff, "|log2FC| >= 2", "|log2FC| <= 2"),
+         # Classifies genes as up (positive log2FoldChange) or down (negative log2FoldChange) regulated
+         Regulation = ifelse(log2FoldChange > 0, "Up", "Down"),
          # Bins adjusted p-values (padj) into significance levels and labels each level
          # i.e. -Inf to 0.001 label is '<= 0.001' and the 0.001 to 0.01 label is '0.001-0.01'
          sig_bin = cut(padj,
-                       breaks = c(-Inf, 0.001, 0.01, 0.05),
-                       labels = c("<=0.001", "0.001-0.01", "0.01-0.05")),
+                       breaks = c(-Inf, 0.001, 0.01, 0.05, 1.00),
+                       labels = c("<0.001", "0.001-0.01", "0.01-0.05", "n.s")),
          # Defines the variable ('x') which indicates the direction of DE for each gene
          # +1 for up-regulation and -1 for down-regulation
          x = ifelse(Regulation == "Down", -1, 1))
 
 # Determine the number of up and down-regulated DEGs for each dataset (optional)
-deg_counts <- plot_data %>% group_by(dataset, Regulation) %>%
+deg_counts <- plot_data %>% group_by(dataset, Regulation, lfc, sig_bin) %>%
   summarise(Count = n(), .groups = "drop")
 
 # Generate a mirrored bar plot using ggplot2 with each dataset separated on y-axis
@@ -510,8 +514,8 @@ ggplot(plot_data, aes(x = x, y = dataset, fill = sig_bin)) +
   # Adds a vertical line at the origin to separate the up and down-regulated genes (optional)
   geom_vline(xintercept = 0, linewidth = 0.6) +
   # Specifies the colours for each significance level 
-  scale_fill_manual(name = "Adj. p-value",
-                    values = c("<=0.001" = "#39568CFF","0.001-0.01" = "#3CBB75FF","0.01-0.05" = "#FDE725FF")) +
+  scale_fill_manual(name = "Adj. p-value", values = c("<0.001" = "#453781FF", "0.001-0.01" = "#238A8DFF", 
+                                                      "0.01-0.05" = "#55C667FF", "n.s" = "#FDE725FF")) +
   labs(x = "Number of DEGs", y = "Dataset") + theme_light(base_size = 13)
 
 #### Visualise the cytokine-cytokine receptor pathway on a KEGG map ####
