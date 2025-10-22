@@ -608,7 +608,7 @@ for (name in names(kegg_table)) {
 # Combine the result subsets into one data frame adding an id column according to dataset
 all_res <- bind_rows(dea_pathway, .id = "dataset")
 
-# Define the DEG significance cut-off (i.e. the adjusted p-value)
+# Define the log2 fold change cut-off value
 # ***CHANGE (AS NEEDED)***
 lfc_cutoff <- 2
 
