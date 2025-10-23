@@ -182,6 +182,8 @@ eigencorplot(p_list$<dataset_name>, # Replace with actual dataset name e.g. p_li
 pc_df <- p_list$<dataset_name>$rotated
 # Example usage: Check the correlation between PC1 and age
 cor.test(pc_df$PC1, p_list$<dataset_name>$metadata$age)
+# Note: for non-normally distributed variables use Spearman's correlation
+cor.test(pc_df$PC1, p_list$<dataset_name>$metadata$age, method="spearman")
 
 ## Option 3: Colour a PCA plot according to a specified variable
 # This can be used when you want to investigate the relationship between a factor variable 
@@ -209,6 +211,10 @@ ggplot(pc_df, aes(x = PC1, y = PC2)) + theme_light(base_size = 20) +
 #### Section 2.4: PCA plots with arrows representing numeric variables ####
 ###########################################################################
 
+# The arrows generated represent the *direction* of correlation between numeric metadata 
+# variables (e.g., age, BMI) and the principal components. 
+# Note: arrows only show *direction*, NOT statistical significance or strength of the correlation
+
 # Define which numeric variables are to be plotted as directionality arrows for each dataset 
 # Note: variables must be numeric and have values for all samples otherwise this will throw an error
 # ***CHANGE (AS NEEDED)***
@@ -219,11 +225,14 @@ metadata_vars_list <- list(HR = c("prev_losses", "age", "live_births"), RF = NUL
 
 # Generate the function that generates a PCA plot with directionality arrows for 
 # the specified numeric metadata variables per dataset
-plot_pca_with_arrows <- function(datasets, metadata_vars, p_list) {
-  # Creates a data frame that contains the PCA coordinates and one containing the associated metadata
+# ***CHANGE (AS NEEDED)***
+# Note: the method specified below should be changed depending on the normality of the numeric variable
+# (e.g. use "pearson" if variable is normally distributed and "spearman" if it isn't
+plot_pca_with_arrows <- function(datasets, metadata_vars, p_list, method = "spearman") {
+  # Generates a data frame that contains the PCA coordinates and one containing the associated metadata
   pc_df <- p_list[[datasets]]$rotated
   meta <- p_list[[datasets]]$metadata
-  # Extracts % variance explained by PC1 and PC2 for labeling axes 
+  # Extracts % variance explained by PC1 and PC2 for labeling axes
   pc1_var <- round(p_list[[datasets]]$variance["PC1"], 1)
   pc2_var <- round(p_list[[datasets]]$variance["PC2"], 1)
   
@@ -248,8 +257,8 @@ plot_pca_with_arrows <- function(datasets, metadata_vars, p_list) {
     
     # Loops through each variable and compute the Pearson correlation coefficient with PC1 and PC2
     for (var in metadata_vars) {
-      arrow_data[arrow_data$Variable == var, "PC1"] <- cor(meta[[var]], pc_df$PC1, use = "complete.obs")
-      arrow_data[arrow_data$Variable == var, "PC2"] <- cor(meta[[var]], pc_df$PC2, use = "complete.obs") }
+      arrow_data[arrow_data$Variable == var, "PC1"] <- cor(meta[[var]], pc_df$PC1, use = "complete.obs", method = method)
+      arrow_data[arrow_data$Variable == var, "PC2"] <- cor(meta[[var]], pc_df$PC2, use = "complete.obs", method = method) }
     
     # Scales the arrow vectors (to make them more visible on the PCA plot)
     # Note: this scales arrow length uniformly — it does not preserve magnitude.
@@ -267,9 +276,11 @@ plot_pca_with_arrows <- function(datasets, metadata_vars, p_list) {
   
   return(p_base)   }
 
-# Loop the function through each dataset and save plots in a list 
+# Loop the function through each dataset and save the PCA plots in a list 
 pca_arrow_plots <- lapply(datasets, function(ds) {
   plot_pca_with_arrows(ds, metadata_vars_list[[ds]], p_list)  })
+# Note: this can be run for individual datasets which allows you to switch between Pearson's and Spearman's
+# correlation depending on the normality of your numeric variables
 
 # Rename each plot using the named list for clarity
 names(pca_arrow_plots) <- datasets
